@@ -1,0 +1,212 @@
+:root {
+    --bg: #f5f7fa;
+    --text: #222;
+    --subtext: #666;
+    --accent: #4f46e5;
+    --border: #ddd;
+    --nav-bg: #e2e8f0;
+}
+
+body.dark {
+    --bg: #0f172a;
+    --text: #e5e7eb;
+    --subtext: #9ca3af;
+    --accent: #818cf8;
+    --border: #334155;
+    --nav-bg: #1e293b;
+}
+
+body {
+    margin: 0;
+    padding: 6% 12%;
+    font-family: 'Pretendard', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    transition: all 0.3s ease;
+}
+
+/* --- 네비게이션 스타일 --- */
+nav {
+    margin-bottom: 40px;
+    padding: 15px 20px;
+    background: var(--nav-bg);
+    border-radius: 10px;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+    color: var(--accent);
+}
+
+/* --- 섹션 전환용 클래스 --- */
+.content-section {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.content-section.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 텍스트 및 기본 요소 스타일 --- */
+h1 {
+    font-size: 3.2rem;
+    margin-bottom: 20px; /* 아래 문구와의 간격을 줍니다 */
+    display: block;
+    width: fit-content;  /* 밑줄 길이를 글자 길이에 맞춤 */
+    border-bottom: 5px solid var(--accent);
+    padding-bottom: 5px;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-top: 60px;
+    color: var(--subtext);
+    letter-spacing: 2px;
+}
+
+p, li {
+    font-size: 1.1rem;
+}
+
+ul {
+    padding-left: 20px;
+    list-style-type: square;
+}
+
+.contact-info {
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: var(--subtext);
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background: var(--border);
+    margin: 50px 0;
+}
+
+footer {
+    margin-top: 40px;
+    color: var(--subtext);
+}
+
+/* --- 타이핑 커서 효과 --- */
+#rotating-text {
+    display: block;      /* 새로운 줄에서 시작*/
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--subtext);
+    border-right: 2px solid var(--accent);
+    padding-right: 5px;
+    width: fit-content;  /* 커서가 글자 바로 뒤에 붙도록 설정 */
+    white-space: normal; /* 글자가 길어지면 줄바꿈 허용 (선택 사항) */
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: var(--accent); }
+}
+
+/* --- 다크모드 토글 버튼 --- */
+#night_day {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+/* --- 게시판 스타일 --- */
+.board-input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+#postInput {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.board-input-area button {
+    padding: 0 24px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+#postList {
+    list-style: none;
+    padding: 0;
+}
+
+#postList li {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--nav-bg);
+}
+
+.delete-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+}
+
+/* --- 반응형 (모바일) --- */
+@media (max-width: 600px) {
+    body { padding: 10% 6%; }
+    h1 { font-size: 2.2rem; }
+    .board-input-area { flex-direction: column; }
+    .board-input-area button { padding: 12px; }
+}
