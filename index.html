@@ -2,164 +2,93 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>자기소개서</title>
-
-    <style>
-        :root {
-            --bg: #f5f7fa;
-            --text: #222;
-            --subtext: #666;
-            --accent: #4f46e5;
-            --border: #ddd;
-        }
-
-        body.dark {
-            --bg: #0f172a;
-            --text: #e5e7eb;
-            --subtext: #9ca3af;
-            --accent: #818cf8;
-            --border: #334155;
-        }
-
-        body {
-            margin: 0;
-            padding: 6% 12%;
-            font-family: 'Pretendard', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.8;
-            transition: all 0.3s ease;
-        }
-
-        h1 {
-            font-size: 3.2rem;
-            margin-bottom: 10px;
-            display: inline-block;
-            border-bottom: 5px solid var(--accent);
-            padding-bottom: 5px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            margin-top: 60px;
-            color: var(--subtext);
-            letter-spacing: 2px;
-        }
-
-        p, li {
-            font-size: 1.1rem;
-        }
-
-        ul {
-            padding-left: 20px;
-            list-style-type: square;
-        }
-
-        .contact-info {
-            font-weight: bold;
-            margin-bottom: 40px;
-            color: var(--subtext);
-        }
-
-        hr {
-            border: none;
-            height: 1px;
-            background: var(--border);
-            margin: 50px 0;
-        }
-
-        footer {
-            margin-top: 40px;
-            color: var(--subtext);
-        }
-
-        #night_day {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 999px;
-            background: var(--accent);
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        section {
-            backdrop-filter: blur(6px);
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 10% 6%;
-            }
-            h1 {
-                font-size: 2.2rem;
-            }
-        }
-    </style>
+    <title>김민준의 포트폴리오</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <input id="night_day" type="button" value="🌙" onclick="toggleMode()">
+    <input id="night_day" type="button" value="⬛" onclick="toggleMode()">
 
-    <h1>김민준</h1>
-    <div class="contact-info">
-        이메일: sdh250403@sdh.hs.kr | 전화: 010-1234-5678 | 지역: 서울특별시
-    </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showSection('main')">메인</a></li>
+            <li><a href="#" onclick="showSection('about')">자기소개</a></li>
+            <li><a href="#" onclick="showSection('board')">게시판</a></li>
+            <li><a href="#" onclick="showSection('study')">공부노트</a></li>
+            <li><a href="#" onclick="showSection('login')">로그인</a></li>
+        </ul>
+    </nav>
 
-    <section>
-        <h2>한 줄 소개</h2>
-        <p>adipisicing elit. Nisi,</p>
+    <section id="main" class="content-section">
+        <div class="welcome-box">
+            <h1>PORTFOLIO</h1>
+            <p id="rotating-text"></p>
+        </div>
     </section>
 
-    <hr>
+    <section id="about" class="content-section hidden">
+        <h1>김민준</h1>
+        <div class="contact-info">
+            이메일: sdh250403@sdh.hs.kr | 전화: 010-1234-5678 | 지역: 서울특별시
+        </div>
 
-    <section>
-        <h2>기술 스택</h2>
-        <ul>
-            <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
-            <li><strong>Tools:</strong> Git, Slack, Notion</li>
-            <li><strong>Languages:</strong> consectetur adipisicing elit adipisicing</li>
+        <section>
+            <h2>한 줄 소개</h2>
+            <p>adipisicing elit. Nisi,</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>기술 스택</h2>
+            <ul>
+                <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
+                <li><strong>Tools:</strong> Git, Slack, Notion</li>
+                <li><strong>Languages:</strong> consectetur adipisicing elit adipisicing</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>주요 경험</h2>
+            <p><strong>2024 - 현재:</strong> Lorem ipsum dolor sit amet consectetur</p>
+            <p><strong>2023:</strong> adipisicing elit. Nisi,</p>
+        </section>
+
+        <section>
+            <h2>자기소개</h2>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. adipisicing elit. Nisi, Deserunt tempora architecto nesciunt enim repellendus impedit quam a voluptates beatae corporis.
+            </p>
+        </section>
+        
+        <hr>
+        <footer>
+            <p>adipisicing elit. Nisi,</p>
+        </footer>
+    </section>
+
+    <section id="board" class="content-section hidden">
+        <h1>게시판</h1>
+        <p>자유롭게 방명록이나 의견을 남겨주세요.</p>
+        <div class="board-input-area">
+            <input type="text" id="postInput" placeholder="내용을 입력하세요." onkeypress="handleKeyPress(event)">
+            <button onclick="addPost()">등록</button>
+        </div>
+        <ul id="postList">
         </ul>
     </section>
 
-    <section>
-        <h2>주요 경험</h2>
-        <p><strong>2024 - 현재:</strong> Lorem ipsum dolor sit amet consectetur</p>
-        <p><strong>2023:</strong> adipisicing elit. Nisi,</p>
+    <section id="study" class="content-section hidden">
+        <h1>공부노트</h1>
+        <p>공사중</p>
     </section>
 
-    <section>
-        <h2>자기소개</h2>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. adipisicing elit. Nisi, Deserunt tempora architecto nesciunt enim repellendus impedit quam a voluptates beatae corporis.
-        </p>
+    <section id="login" class="content-section hidden">
+        <h1>로그인</h1>
+        <p>공사중</p>
     </section>
 
-    <hr>
-
-    <footer>
-        <p>adipisicing elit. Nisi,</p>
-    </footer>
-
-    <script>
-        function toggleMode() {
-            const body = document.body;
-            const btn = document.getElementById("night_day");
-
-            body.classList.toggle("dark");
-
-            if (body.classList.contains("dark")) {
-                btn.value = "☀️";
-            } else {
-                btn.value = "🌙";
-            }
-        }
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
 </body>
 </html>
