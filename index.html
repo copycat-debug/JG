@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>김민준 | Portfolio</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="nav-container">
+        <div class="logo" onclick="navigate('main')">김민준</div>
+        <div class="nav-right">
+          <nav class="nav-links">
+            <a id="nav-main" class="active" onclick="navigate('main')">메인</a>
+            <a id="nav-about" onclick="navigate('about')">자기소개</a>
+            <a id="nav-board" onclick="navigate('board-list')">게시판</a>
+            <a id="nav-study" onclick="navigate('study-list')">공부노트</a>
+            
+            <a id="nav-crypto" onclick="navigate('crypto')">코인시세</a>
+            
+            <a id="nav-login" onclick="navigate('login')">로그인</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <main id="view-main" class="page-section active">
+        <section>
+          <div class="welcome-box">
+            <h1>PORTFOLIO</h1>
+            <p id="rotating-text"></p>
+          </div>
+        </section>
+      </main>
+
+      <main id="view-about" class="page-section">
+        <section>
+          <h2 class="section-title">김민준</h2>
+          <div class="about-card">
+            <h3>Contact Info</h3>
+            <p><strong>이메일:</strong> sdh250403@sdh.hs.kr</p>
+            <p><strong>전화:</strong> 010-3578-4269</p>
+            <p><strong>지역:</strong> 서울특별시</p>
+          </div>
+          <div class="about-card">
+            <h3>한 줄 소개</h3>
+            <p>아이디어를 빠르게 실행하고, 완성도 있게 마무리하는 개발자를 목표로 성장하고 있습니다.</p>
+          </div>
+          <div class="about-card">
+            <h3>기술 스택</h3>
+            <ul>
+              <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
+              <li><strong>Tools:</strong> Git, GitHub, Slack, Notion, VS Code</li>
+              <li><strong>Languages:</strong> JavaScript (기초~중급), Python (기초)</li>
+            </ul>
+          </div>
+          <div class="about-card">
+            <h3>주요 경험</h3>
+            <p><strong>2026 - 현재:</strong></p>
+            <ul>
+              <li>개인 홈페이지 제작 및 게시판 기능 구현</li>
+              <li>로그인 기능 구조 설계 및 웹 보안 기초 학습</li>
+              <li>간단한 웹 프로젝트 기획 및 개발 경험</li>
+            </ul>
+            <p><strong>2025:</strong></p>
+            <ul>
+              <li>HTML/CSS 기반 정적 웹페이지 제작</li>
+              <li>Git을 활용한 버전 관리 및 협업 기초 학습</li>
+              <li>학교 프로젝트 발표 및 서비스 기획 경험</li>
+            </ul>
+          </div>
+          <div class="about-card">
+            <h3>자기소개</h3>
+            <p>문제를 해결하는 과정 자체를 즐기는 개발자 지망생입니다. 아이디어가 떠오르면 바로 구현해보며, 부족한 부분은 스스로 찾아보고 개선합니다.</p>
+            <p>웹 개발을 중심으로 프론트엔드 구조와 사용자 경험을 공부하고 있으며, 단순히 기능이 작동하는 것에 그치지 않고 구조가 명확하고 확장 가능한 코드를 만드는 것을 목표로 하고 있습니다.</p>
+            <p>앞으로는 백엔드와 데이터베이스 영역까지 확장하여, 하나의 서비스를 처음부터 끝까지 설계하고 구현할 수 있는 개발자로 성장하고 싶습니다.</p>
+          </div>
+          <footer style="text-align: center; color: var(--text-secondary); margin-top: 2rem;">
+            <p>© 2026 김민준. All rights reserved.</p>
+          </footer>
+        </section>
+      </main>
+
+      <main id="view-board-list" class="page-section board-container">
+        <h2 class="section-title">게시판</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem">자유롭게 방명록이나 의견을 남겨주세요.</p>
+        <div class="header-actions">
+          <button class="btn" onclick="openNewPost()">글쓰기</button>
+        </div>
+        <table class="board-table">
+          <thead>
+            <tr>
+              <th class="col-id">번호</th>
+              <th class="col-title">제목</th>
+              <th class="col-author">작성자</th>
+              <th class="col-date">작성일</th>
+            </tr>
+          </thead>
+          <tbody id="board-tbody"></tbody>
+        </table>
+      </main>
+
+      <main id="view-board-write" class="page-section board-container">
+        <h2 class="section-title">게시글 작성</h2>
+        <div class="board-form">
+          <div class="form-group">
+            <label>제목</label>
+            <input type="text" id="post-title" class="form-control" placeholder="제목을 입력하세요" />
+          </div>
+          <div class="form-group">
+            <label>작성자</label>
+            <input type="text" id="post-author" class="form-control" placeholder="이름을 입력하세요" />
+          </div>
+          <div class="form-group">
+              <label>이미지 첨부 (선택)</label>
+              <input type="file" id="post-image-input" accept="image/*" class="form-control" style="padding: 0.5rem;" onchange="previewImage(this, 'post-image-preview')">
+              <img id="post-image-preview" src="" style="display: none; margin-top: 15px; max-height: 250px; border-radius: 8px; border: 1px solid var(--border-color); object-fit: contain; width: auto;">
+          </div>
+          <div class="form-group">
+            <label>내용</label>
+            <textarea id="post-content" class="form-control" placeholder="내용을 입력하세요"></textarea>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-outline" onclick="navigate('board-list')">취소</button>
+            <button class="btn" onclick="savePost(event)">등록</button>
+          </div>
+        </div>
+      </main>
+
+      <main id="view-board-detail" class="page-section board-container">
+        <div class="board-detail-box">
+          <div class="detail-header">
+            <h3 class="detail-title" id="detail-title"></h3>
+            <div class="detail-info">
+              <span id="detail-author"></span> | <span id="detail-date"></span>
+              <div class="like-container" onclick="toggleLike('posts')" style="cursor:pointer; margin-left:auto; display:flex; align-items:center; gap:5px; background:var(--bg-color); padding:5px 12px; border-radius:20px;">
+                  <i class="fa-solid fa-heart" id="board-like-icon" style="color:#d1d5db; transition:color 0.3s;"></i>
+                  <span id="board-like-count" style="font-weight:bold;">0</span>
+              </div>
+            </div>
+          </div>
+          <div class="detail-content" id="detail-content"></div>
+          
+          <div class="btn-group">
+            <button class="btn btn-outline" onclick="navigate('board-list')">목록</button>
+            <span id="board-action-buttons" style="display: none; gap: 1rem;">
+                <button class="btn btn-outline" onclick="goToEditPost()">수정</button>
+                <button class="btn btn-danger" onclick="deletePost()">삭제</button>
+            </span>
+          </div>
+
+          <div style="margin-top: 3rem; border-top: 2px dashed var(--border-color); padding-top: 2rem;">
+              <h4 style="font-size: 1.2rem; margin-bottom: 1rem;">댓글</h4>
+              <textarea id="board-comment-input" class="form-control" placeholder="댓글을 남겨보세요. (로그인 필요)" style="width:100%; min-height:80px; margin-bottom:10px;"></textarea>
+              <div style="text-align: right;">
+                  <button class="btn" onclick="submitComment('posts')">댓글 등록</button>
+              </div>
+              <div id="board-comments-list" style="margin-top: 20px;"></div>
+          </div>
+        </div>
+      </main>
+
+      <main id="view-study-list" class="page-section board-container">
+        <h2 class="section-title">공부노트</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem">학습한 내용을 마크다운으로 기록합니다.</p>
+        <div class="header-actions">
+          <button class="btn" onclick="openNewStudy()">학습 기록하기</button>
+        </div>
+        <table class="board-table">
+          <thead>
+            <tr>
+              <th class="col-id">번호</th>
+              <th class="col-title">학습 주제</th>
+              <th class="col-category">카테고리</th>
+              <th class="col-date">작성일</th>
+            </tr>
+          </thead>
+          <tbody id="study-tbody"></tbody>
+        </table>
+      </main>
+
+      <main id="view-study-write" class="page-section board-container">
+        <h2 class="section-title">노트 작성</h2>
+        <div class="board-form">
+          <div class="form-group">
+            <label>학습 주제 (제목)</label>
+            <input type="text" id="study-title" class="form-control" placeholder="예: Ruby의 블록(Block)과 반복문 활용법" />
+          </div>
+          <div class="form-group">
+            <label>카테고리 (분야)</label>
+            <input type="text" id="study-category" class="form-control" placeholder="예: Ruby" />
+          </div>
+          <div class="form-group">
+            <label>작성자</label>
+            <input type="text" id="study-author" class="form-control" placeholder="이름을 입력하세요" />
+          </div>
+          <div class="form-group">
+              <label>이미지 첨부 (선택)</label>
+              <input type="file" id="study-image-input" accept="image/*" class="form-control" style="padding: 0.5rem;" onchange="previewImage(this, 'study-image-preview')">
+              <img id="study-image-preview" src="" style="display: none; margin-top: 15px; max-height: 250px; border-radius: 8px; border: 1px solid var(--border-color); object-fit: contain; width: auto;">
+          </div>
+          <div class="form-group">
+            <label>학습 내용 (마크다운 문법 지원)</label>
+            <textarea id="study-content" class="form-control" placeholder="## 오늘 배운 내용&#10;&#10;```Ruby&#10;puts 'Hello, World!'&#10;```"></textarea>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-outline" onclick="navigate('study-list')">취소</button>
+            <button class="btn" onclick="saveStudy(event)">저장</button>
+          </div>
+        </div>
+      </main>
+
+      <main id="view-study-detail" class="page-section board-container">
+        <div class="board-detail-box">
+          <div class="detail-header">
+            <h3 class="detail-title" id="study-detail-title"></h3>
+            <div class="detail-info">
+              <span id="study-detail-category" class="category-badge"></span>
+              <span id="study-detail-author" style="margin-left: 10px"></span> |
+              <span id="study-detail-date"></span>
+              <div class="like-container" onclick="toggleLike('study')" style="cursor:pointer; margin-left:auto; display:flex; align-items:center; gap:5px; background:var(--bg-color); padding:5px 12px; border-radius:20px;">
+                  <i class="fa-solid fa-heart" id="study-like-icon" style="color:#d1d5db; transition:color 0.3s;"></i>
+                  <span id="study-like-count" style="font-weight:bold;">0</span>
+              </div>
+            </div>
+          </div>
+          <div class="detail-content" id="study-detail-content"></div>
+          
+          <div class="btn-group">
+            <button class="btn btn-outline" onclick="navigate('study-list')">목록</button>
+            <span id="study-action-buttons" style="display: none; gap: 1rem;">
+                <button class="btn btn-outline" onclick="goToEditStudy()">수정</button>
+                <button class="btn btn-danger" onclick="deleteStudy()">삭제</button>
+            </span>
+          </div>
+
+          <div style="margin-top: 3rem; border-top: 2px dashed var(--border-color); padding-top: 2rem;">
+              <h4 style="font-size: 1.2rem; margin-bottom: 1rem;">댓글</h4>
+              <textarea id="study-comment-input" class="form-control" placeholder="댓글을 남겨보세요. (로그인 필요)" style="width:100%; min-height:80px; margin-bottom:10px;"></textarea>
+              <div style="text-align: right;">
+                  <button class="btn" onclick="submitComment('study')">댓글 등록</button>
+              </div>
+              <div id="study-comments-list" style="margin-top: 20px;"></div>
+          </div>
+        </div>
+      </main>
+
+      <main id="view-crypto" class="page-section board-container">
+        <h2 class="section-title">실시간 코인 시세</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem">업비트(Upbit) 웹소켓 실시간 연동 데이터입니다.</p>
+        
+        <div id="detailed-chart-section" style="display: none; margin-bottom: 2.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 id="chart-coin-name" style="margin: 0; font-size: 1.5rem;">종목명</h3>
+              <span id="chart-coin-price" class="crypto-price" style="font-size: 1.5rem; font-weight: bold;">0 원</span>
+          </div>
+          <div style="position: relative; height: 400px; background: var(--surface-color); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-color);">
+            <canvas id="mainDetailedChart"></canvas>
+          </div>
+        </div>
+        
+        <div class="search-section" style="margin-bottom: 2rem; position: relative; max-width: 500px; margin-left: auto; margin-right: auto;">
+          <input type="text" id="coin-search" class="form-control" placeholder="추가할 코인 검색 (예: 솔라나, SOL, 리플)" oninput="handleSearchInput()" style="width: 100%; padding: 1rem; border-radius: 8px; font-size: 1rem;">
+          <ul id="search-results" style="position: absolute; top: 100%; left: 0; right: 0; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 8px; list-style: none; padding: 0; margin-top: 5px; max-height: 250px; overflow-y: auto; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none;">
+          </ul>
+        </div>
+      
+        <div id="crypto-container" class="crypto-grid">
+      </main>
+
+      <main id="view-login" class="page-section">
+        <div class="auth-wrapper">
+          <div class="auth-card">
+            <h2 class="section-title" style="margin: 0 auto 2rem auto">로그인</h2>
+            <div id="user-info" style="display: none">
+              <p style="margin-bottom: 1.5rem; text-align: center;">
+                <span id="user-email" style="font-weight: bold; color: var(--accent-color)"></span>님, 환영합니다!
+              </p>
+              <button class="btn btn-danger" style="width: 100%" onclick="handleLogout()">로그아웃</button>
+            </div>
+            <div id="auth-form">
+              <div class="form-group" style="text-align: left">
+                <label>이메일</label>
+                <input type="email" id="login-email" class="form-control" placeholder="example@email.com" />
+              </div>
+              <div class="form-group" style="text-align: left">
+                <label>비밀번호</label>
+                <input type="password" id="login-pw" class="form-control" placeholder="비밀번호 입력" />
+              </div>
+              <div class="btn-group" style="flex-direction: column; gap: 0.5rem; margin-top: 1rem">
+                <button class="btn" style="width: 100%" onclick="handleLogin()">로그인</button>
+                <button class="btn btn-outline" style="width: 100%" onclick="handleGoogleLogin()">구글 계정으로 로그인</button>
+              </div>
+              <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
+                아직 계정이 없으신가요? 
+                <a href="#" onclick="navigate('signup'); return false;" style="color: var(--accent-color); font-weight: bold; text-decoration: none;">회원가입</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <main id="view-signup" class="page-section">
+        <div class="auth-wrapper">
+          <div class="auth-card">
+            <h2 class="section-title" style="margin: 0 auto 2rem auto">회원가입</h2>
+            <div>
+              <div class="form-group" style="text-align: left">
+                <label>이메일</label>
+                <input type="email" id="signup-email" class="form-control" placeholder="example@email.com" />
+              </div>
+              <div class="form-group" style="text-align: left">
+                <label>비밀번호</label>
+                <input type="password" id="signup-pw" class="form-control" placeholder="6자리 이상 입력" />
+              </div>
+              <div class="btn-group" style="flex-direction: column; gap: 0.5rem; margin-top: 1rem">
+                <button class="btn btn-outline" style="width: 100%" onclick="handleSignUp()">회원가입 완료</button>
+              </div>
+              <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
+                이미 계정이 있으신가요? 
+                <a href="#" onclick="navigate('login'); return false;" style="color: var(--accent-color); font-weight: bold; text-decoration: none;">로그인하러 가기</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

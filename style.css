@@ -1,0 +1,438 @@
+/* --- CSS 변수 설정 (라이트 모드 전용) --- */
+:root {
+  --bg-color: #f5f7fa;
+  --surface-color: #ffffff;
+  --surface-hover: #f3f4f6;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --border-color: #e5e7eb;
+  --accent-color: #4f46e5;
+  --danger-color: #ef4444;
+  --category-color: #8b5cf6;
+  --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%);
+}
+
+/* --- 기본 리셋 및 폰트 --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Pretendard", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* --- 헤더 및 내비게이션 --- */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--accent-color);
+}
+
+/* --- 메인 컨테이너 및 뷰 전환 --- */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 80px 2rem 2rem 2rem;
+}
+
+.page-section {
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+.page-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+section {
+  padding: 60px 0;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* --- 공통 타이틀 --- */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  position: relative;
+  width: fit-content;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  height: 4px;
+  background: var(--category-color);
+  border-radius: 2px;
+}
+
+/* --- 메인 페이지 타이핑 효과 --- */
+.welcome-box h1 {
+  font-size: 3.2rem;
+  margin-bottom: 20px;
+  display: block;
+  width: fit-content;
+  border-bottom: 5px solid var(--accent-color);
+  padding-bottom: 5px;
+  color: var(--text-primary);
+}
+
+#rotating-text {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-right: 2px solid var(--accent-color);
+  padding-right: 5px;
+  width: fit-content;
+  white-space: normal;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: var(--accent-color); }
+}
+
+/* --- About 카드 --- */
+.about-card {
+  background-color: var(--surface-color);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.about-card h3 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  width: fit-content;
+  border-bottom: 3px solid var(--category-color);
+  padding-bottom: 5px;
+}
+
+.about-card p,
+.about-card li {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.8rem;
+}
+
+.about-card ul {
+  padding-left: 1.5rem;
+}
+
+/* --- 버튼 스타일 --- */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: var(--accent-gradient);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 30px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+.btn-outline:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+.btn-danger {
+  background: var(--danger-color);
+}
+
+/* --- 게시판 리스트 --- */
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.board-container {
+  padding-top: 50px;
+  min-height: 80vh;
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: var(--surface-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.board-table th,
+.board-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.board-table th {
+  background: rgba(0, 0, 0, 0.03);
+  font-weight: 600;
+}
+
+.board-table tr:last-child td {
+  border-bottom: none;
+}
+
+.board-table tbody tr {
+  transition: background 0.3s;
+}
+
+.board-table tbody tr:hover {
+  background: var(--surface-hover);
+  cursor: pointer;
+}
+
+.col-id { width: 10%; }
+.col-title { width: 50%; }
+.col-author { width: 20%; }
+.col-date { width: 20%; }
+.col-category { width: 20%; }
+
+.category-badge {
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--category-color);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+/* --- 글쓰기 / 상세 폼 둥근 박스 --- */
+.board-form,
+.board-detail-box {
+  background: var(--surface-color);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  margin-top: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* --- 입력 폼 요소 --- */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 1rem;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 250px;
+  line-height: 1.5;
+}
+
+#study-content {
+  font-family: "Consolas", monospace;
+  min-height: 350px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+/* --- 마크다운 렌더링 영역 --- */
+.detail-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.detail-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+/* --- 실시간 코인시세 전용 스타일 --- */
+.crypto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.crypto-card {
+  background: var(--surface-color);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.crypto-card:hover {
+  transform: translateY(-5px);
+}
+
+.crypto-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.crypto-price {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+  transition: color 0.3s ease;
+}
+
+.crypto-change {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* 한국 주식/코인 기준: 상승은 빨간색, 하락은 파란색, 보합은 기본색 */
+.color-up { color: #c84a31; }
+.color-down { color: #1261c4; }
+.color-even { color: var(--text-primary); }
+
+/* 데이터가 바뀔 때 반짝이는 애니메이션 효과 */
+@keyframes flash-up {
+  0% { background-color: rgba(200, 74, 49, 0.15); }
+  100% { background-color: var(--surface-color); }
+}
+@keyframes flash-down {
+  0% { background-color: rgba(18, 97, 196, 0.15); }
+  100% { background-color: var(--surface-color); }
+}
+
+.flash-up-anim { animation: flash-up 0.5s ease-out; }
+.flash-down-anim { animation: flash-down 0.5s ease-out; }
+
+/* 코인 카드 삭제 버튼 */
+.crypto-card { position: relative; } /* 버튼 배치를 위해 추가 */
+
+.delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.delete-btn:hover { opacity: 1; }
