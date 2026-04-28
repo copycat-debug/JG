@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>김민준 | Portfolio</title>
+
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css"
+    />
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage-compat.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="nav-container">
+        <div class="logo" onclick="navigate('main')">김민준</div>
+
+        <div class="nav-right">
+          <nav class="nav-links">
+            <a id="nav-main" class="active" onclick="navigate('main')">메인</a>
+            <a id="nav-about" onclick="navigate('about')">자기소개</a>
+            <a id="nav-board" onclick="navigate('board-list')">게시판</a>
+            <a id="nav-study" onclick="navigate('study-list')">공부노트</a>
+            <a id="nav-upbit" onclick="navigate('upbit')">업비트</a>
+            <a id="nav-login" onclick="navigate('login')">로그인</a>
+          </nav>
+          <button
+            id="theme-toggle-btn"
+            class="theme-toggle-btn"
+            type="button"
+            onclick="toggleTheme()"
+            aria-label="다크모드 전환"
+          >
+            
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <main id="view-main" class="page-section active">
+        <section>
+          <div class="welcome-box">
+            <h1>PORTFOLIO</h1>
+            <p id="rotating-text"></p>
+          </div>
+        </section>
+      </main>
+
+      <main id="view-about" class="page-section">
+        <section>
+          <h2 class="section-title">김민준</h2>
+
+          <div class="about-card">
+            <h3>Contact Info</h3>
+            <p><strong>이메일:</strong> your-email@example.com</p>
+            <p><strong>전화:</strong> 010-0000-0000</p>
+            <p><strong>지역:</strong> 서울특별시</p>
+          </div>
+
+          <div class="about-card">
+            <h3>한 줄 소개</h3>
+            <p>
+              아이디어를 빠르게 실행하고, 완성도 있게 마무리하는 개발자를 목표로
+              성장하고 있습니다.
+            </p>
+          </div>
+
+          <div class="about-card">
+            <h3>기술 스택</h3>
+            <ul>
+              <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
+              <li><strong>Tools:</strong> Git, GitHub, Slack, Notion, VS Code</li>
+              <li><strong>Languages:</strong> JavaScript, Python</li>
+            </ul>
+          </div>
+
+          <div class="about-card">
+            <h3>주요 경험</h3>
+            <p><strong>2026 - 현재:</strong></p>
+            <ul>
+              <li>개인 홈페이지 제작 및 게시판 기능 구현</li>
+              <li>로그인 기능 구조 설계 및 웹 보안 기초 학습</li>
+              <li>간단한 웹 프로젝트 기획 및 개발 경험</li>
+            </ul>
+
+            <p><strong>2025:</strong></p>
+            <ul>
+              <li>HTML/CSS 기반 정적 웹페이지 제작</li>
+              <li>Git을 활용한 버전 관리 및 협업 기초 학습</li>
+              <li>학교 프로젝트 발표 및 서비스 기획 경험</li>
+            </ul>
+          </div>
+
+          <div class="about-card">
+            <h3>자기소개</h3>
+            <p>
+              문제를 해결하는 과정 자체를 즐기는 개발자 지망생입니다. 아이디어가
+              떠오르면 바로 구현해보며, 부족한 부분은 스스로 찾아보고 개선합니다.
+            </p>
+            <p>
+              웹 개발을 중심으로 프론트엔드 구조와 사용자 경험을 공부하고 있으며,
+              단순히 기능이 작동하는 것에 그치지 않고 구조가 명확하고 확장 가능한
+              코드를 만드는 것을 목표로 하고 있습니다.
+            </p>
+            <p>
+              앞으로는 백엔드와 데이터베이스 영역까지 확장하여, 하나의 서비스를
+              처음부터 끝까지 설계하고 구현할 수 있는 개발자로 성장하고 싶습니다.
+            </p>
+          </div>
+
+          <footer>
+            <p>© 2026 김민준. All rights reserved.</p>
+          </footer>
+        </section>
+      </main>
+
+      <main id="view-board-list" class="page-section board-container">
+        <h2 class="section-title">게시판</h2>
+        <p class="page-description">자유롭게 방명록이나 의견을 남겨주세요.</p>
+
+        <div class="header-actions">
+          <button class="btn" onclick="openNewPost()">글쓰기</button>
+        </div>
+
+        <table class="board-table">
+          <thead>
+            <tr>
+              <th class="col-id">번호</th>
+              <th class="col-title">제목</th>
+              <th class="col-author">작성자</th>
+              <th class="col-date">작성일</th>
+            </tr>
+          </thead>
+          <tbody id="board-tbody"></tbody>
+        </table>
+      </main>
+
+      <main id="view-board-write" class="page-section board-container">
+        <h2 class="section-title">게시글 작성</h2>
+
+        <div class="board-form">
+          <div class="form-group">
+            <label>제목</label>
+            <input
+              type="text"
+              id="post-title"
+              class="form-control"
+              placeholder="제목을 입력하세요"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>작성자</label>
+            <input
+              type="text"
+              id="post-author"
+              class="form-control"
+              placeholder="이름을 입력하세요"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>내용</label>
+            <textarea
+              id="post-content"
+              class="form-control"
+              placeholder="내용을 입력하세요"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>이미지</label>
+            <input
+              type="file"
+              id="post-image"
+              class="form-control"
+              accept="image/*"
+            />
+            <p class="form-help">이미지는 자동 압축해서 빠르게 저장됩니다. JPG, PNG, GIF, WEBP 최대 10MB까지 선택할 수 있습니다.</p>
+            <div id="post-image-preview" class="image-preview"></div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-outline" onclick="navigate('board-list')">
+              취소
+            </button>
+            <button id="post-save-btn" class="btn" onclick="savePost()">
+              등록
+            </button>
+          </div>
+        </div>
+      </main>
+
+        <main id="view-board-detail" class="page-section board-container">
+        <h2 class="section-title">게시글 보기</h2>
+
+        <div class="board-detail-box">
+            <div class="detail-header">
+            <h3 class="detail-title" id="detail-title"></h3>
+            <div class="detail-info">
+                <span id="detail-author"></span>
+                <span>|</span>
+                <span id="detail-date"></span>
+            </div>
+            </div>
+
+            <div class="detail-content" id="detail-content"></div>
+            <div id="detail-image-wrap" class="detail-image-wrap" style="display: none">
+              <img id="detail-image" alt="게시글 첨부 이미지" />
+            </div>
+
+            <div class="like-box">
+            <button
+                id="board-like-btn"
+                class="heart-like-btn"
+                onclick="toggleBoardLike()"
+                aria-label="게시글 좋아요"
+                aria-pressed="false"
+            >
+                <span class="heart-icon" aria-hidden="true">♡</span>
+            </button>
+            <span id="board-like-count">0</span>
+            </div>
+
+            <div class="comment-box">
+            <h3>댓글</h3>
+
+            <div class="comment-write">
+                <textarea
+                id="board-comment-input"
+                class="form-control"
+                placeholder="댓글을 입력하세요"
+                ></textarea>
+                <button class="btn" onclick="addBoardComment()">댓글 작성</button>
+            </div>
+
+            <div id="board-comment-list" class="comment-list"></div>
+            </div>
+
+            <div class="btn-group">
+            <button class="btn btn-outline" onclick="navigate('board-list')">
+                돌아가기
+            </button>
+            <button id="board-edit-btn" class="btn btn-outline" onclick="goToEditPost()">
+                수정
+            </button>
+            <button id="board-delete-btn" class="btn btn-danger" onclick="deletePost()">
+                삭제
+            </button>
+            </div>
+        </div>
+        </main>
+
+      <main id="view-study-list" class="page-section board-container">
+        <h2 class="section-title">공부노트</h2>
+        <p class="page-description">학습한 내용을 마크다운으로 기록합니다.</p>
+
+        <div class="header-actions">
+          <button class="btn" onclick="openNewStudy()">학습 기록하기</button>
+        </div>
+
+        <table class="board-table">
+          <thead>
+            <tr>
+              <th class="col-id">번호</th>
+              <th class="col-title">학습 주제</th>
+              <th class="col-category">카테고리</th>
+              <th class="col-date">작성일</th>
+            </tr>
+          </thead>
+          <tbody id="study-tbody"></tbody>
+        </table>
+      </main>
+
+      <main id="view-study-write" class="page-section board-container">
+        <h2 class="section-title">노트 작성</h2>
+
+        <div class="board-form">
+          <div class="form-group">
+            <label>학습 주제</label>
+            <input
+              type="text"
+              id="study-title"
+              class="form-control"
+              placeholder="예: JavaScript 배열 메서드 정리"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>카테고리</label>
+            <input
+              type="text"
+              id="study-category"
+              class="form-control"
+              placeholder="예: JavaScript"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>작성자</label>
+            <input
+              type="text"
+              id="study-author"
+              class="form-control"
+              placeholder="이름을 입력하세요"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>학습 내용</label>
+            <textarea
+              id="study-content"
+              class="form-control"
+              placeholder="## 오늘 배운 내용&#10;&#10;```js&#10;console.log('Hello');&#10;```"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>이미지</label>
+            <input
+              type="file"
+              id="study-image"
+              class="form-control"
+              accept="image/*"
+            />
+            <p class="form-help">학습 캡처나 참고 이미지는 자동 압축해서 빠르게 저장됩니다. 최대 10MB까지 선택할 수 있습니다.</p>
+            <div id="study-image-preview" class="image-preview"></div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-outline" onclick="navigate('study-list')">
+              취소
+            </button>
+            <button id="study-save-btn" class="btn" onclick="saveStudy()">
+              저장
+            </button>
+          </div>
+        </div>
+      </main>
+
+        <main id="view-study-detail" class="page-section board-container">
+        <div class="board-detail-box">
+            <div class="detail-header">
+            <h3 class="detail-title" id="study-detail-title"></h3>
+            <div class="detail-info">
+                <span id="study-detail-category" class="category-badge"></span>
+                <span id="study-detail-author"></span>
+                <span>|</span>
+                <span id="study-detail-date"></span>
+            </div>
+            </div>
+
+            <div class="detail-content" id="study-detail-content"></div>
+            <div id="study-detail-image-wrap" class="detail-image-wrap" style="display: none">
+              <img id="study-detail-image" alt="공부노트 첨부 이미지" />
+            </div>
+
+            <div class="like-box">
+            <button
+                id="study-like-btn"
+                class="heart-like-btn"
+                onclick="toggleStudyLike()"
+                aria-label="공부노트 좋아요"
+                aria-pressed="false"
+            >
+                <span class="heart-icon" aria-hidden="true">♡</span>
+            </button>
+            <span id="study-like-count">0</span>
+            </div>
+
+            <div class="comment-box">
+            <h3>댓글</h3>
+
+            <div class="comment-write">
+                <textarea
+                id="study-comment-input"
+                class="form-control"
+                placeholder="댓글을 입력하세요"
+                ></textarea>
+                <button class="btn" onclick="addStudyComment()">댓글 작성</button>
+            </div>
+
+            <div id="study-comment-list" class="comment-list"></div>
+            </div>
+
+            <div class="btn-group">
+            <button class="btn btn-outline" onclick="navigate('study-list')">
+                돌아가기
+            </button>
+            <button id="study-edit-btn" class="btn btn-outline" onclick="goToEditStudy()">
+                수정
+            </button>
+            <button id="study-delete-btn" class="btn btn-danger" onclick="deleteStudy()">
+                삭제
+            </button>
+            </div>
+        </div>
+        </main>
+
+      <main id="view-upbit" class="page-section board-container">
+        <h2 class="section-title">업비트 시세</h2>
+        <p class="page-description">업비트 공개 API로 원화마켓 현재가를 조회합니다. 거래 기능은 없고 시세 확인만 가능합니다.</p>
+
+        <div class="upbit-panel">
+          <div class="upbit-controls">
+            <div class="form-group upbit-search-group">
+              <label>코인 검색</label>
+              <input
+                type="text"
+                id="upbit-search"
+                class="form-control"
+                placeholder="예: BTC, 비트코인, KRW-BTC"
+              />
+            </div>
+
+            <button id="upbit-refresh-btn" class="btn" onclick="refreshUpbitPrices()">
+              새로고침
+            </button>
+          </div>
+
+          <div id="upbit-status" class="upbit-status">시세 데이터를 불러오는 중입니다...</div>
+
+          <div id="upbit-chart-panel" class="upbit-chart-panel" style="display: none">
+            <div class="upbit-chart-header">
+              <div>
+                <h3 id="upbit-chart-title">코인을 선택하세요</h3>
+                <p id="upbit-chart-subtitle">검색 결과에서 코인을 클릭하면 선택한 기간의 그래프가 나옵니다.</p>
+              </div>
+
+              <div class="upbit-chart-actions">
+                <button
+                  class="chart-close-btn"
+                  type="button"
+                  onclick="closeUpbitChart()"
+                  aria-label="그래프 닫기"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+            <canvas id="upbit-chart" width="900" height="320"></canvas>
+          </div>
+
+          <div class="upbit-table-wrap">
+            <table class="board-table upbit-table">
+              <thead>
+                <tr>
+                  <th>마켓</th>
+                  <th>코인</th>
+                  <th>현재가</th>
+                  <th>전일대비</th>
+                  <th>거래대금</th>
+                </tr>
+              </thead>
+              <tbody id="upbit-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      <main id="view-login" class="page-section">
+        <div class="auth-wrapper">
+          <div class="auth-card">
+            <h2 class="section-title auth-title">로그인</h2>
+
+            <div id="user-info" style="display: none">
+              <p class="user-message">
+                <span id="user-email"></span>님, 환영합니다!
+              </p>
+
+              <button class="btn btn-danger full-btn" onclick="handleLogout()">
+                로그아웃
+              </button>
+            </div>
+
+            <div id="auth-form">
+              <div class="form-group text-left">
+                <label>이메일</label>
+                <input
+                  type="email"
+                  id="login-email"
+                  class="form-control"
+                  placeholder="example@email.com"
+                />
+              </div>
+
+              <div class="form-group text-left">
+                <label>비밀번호</label>
+                <input
+                  type="password"
+                  id="login-pw"
+                  class="form-control"
+                  placeholder="비밀번호 입력"
+                />
+              </div>
+
+              <div class="auth-btn-group">
+                <button class="btn full-btn" onclick="handleLogin()">
+                  이메일로 로그인
+                </button>
+
+                <button class="google-btn" onclick="handleGoogleLogin()">
+                  <img
+                    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                    alt="Google"
+                  />
+                  구글 계정으로 로그인
+                </button>
+              </div>
+
+              <p class="auth-link-text">
+                아직 계정이 없으신가요?
+                <a href="#" onclick="navigate('signup'); return false;">
+                  회원가입
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <main id="view-signup" class="page-section">
+        <div class="auth-wrapper">
+          <div class="auth-card">
+            <h2 class="section-title auth-title">회원가입</h2>
+
+            <div>
+              <div class="form-group text-left">
+                <label>이메일</label>
+                <input
+                  type="email"
+                  id="signup-email"
+                  class="form-control"
+                  placeholder="example@email.com"
+                />
+              </div>
+
+              <div class="form-group text-left">
+                <label>비밀번호</label>
+                <input
+                  type="password"
+                  id="signup-pw"
+                  class="form-control"
+                  placeholder="6자리 이상 입력"
+                />
+              </div>
+
+              <div class="auth-btn-group">
+                <button class="btn btn-outline full-btn" onclick="handleSignUp()">
+                  회원가입 완료
+                </button>
+              </div>
+
+              <p class="auth-link-text">
+                이미 계정이 있으신가요?
+                <a href="#" onclick="navigate('login'); return false;">
+                  로그인하러 가기
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
